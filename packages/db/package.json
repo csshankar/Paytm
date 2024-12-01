@@ -12,5 +12,6 @@
         "seed": "ts-node prisma/seed.ts"
     },
     "scripts": {
-    "build": "prisma generate "  }
+    "postinstall": "prisma generate"
+ }
 }
