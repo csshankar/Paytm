@@ -12,7 +12,6 @@
         "seed": "ts-node prisma/seed.ts"
     },
     "scripts": {
-    "build": "prisma migrate deploy",
-    "postinstall": "prisma generate && prisma db seed"
+    "postinstall": "prisma generate && prisma migrate deploy && prisma db seed"
   }
 }
