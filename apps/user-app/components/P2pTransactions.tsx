@@ -6,10 +6,10 @@ export const P2pTransactions = ({
     transactions: {
         time: Date,
         amount: number,
-        // TODO: Can the type of `status` be more specific?
         to: number,
         from: number
     }[]
+
 }) => {
     if (!transactions.length) {
         return <Card title="Recent Transactions">
@@ -23,14 +23,14 @@ export const P2pTransactions = ({
             {transactions.map(t => <div className="flex justify-between">
                 <div>
                     <div className="text-sm">
-                        Received INR
+                        Debited INR
                     </div>
                     <div className="text-slate-600 text-xs">
                         {t.time.toDateString()}
                     </div>
                 </div>
                 <div className="flex flex-col justify-center">
-                    + Rs {t.amount / 100}
+                    - Rs {t.amount / 100}
                 </div>
 
             </div>)}

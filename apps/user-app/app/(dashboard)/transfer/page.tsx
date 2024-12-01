@@ -23,7 +23,11 @@ async function getOnRampTransactions() {
     const txns = await prisma.onRampTransaction.findMany({
         where: {
             userId: Number(session?.user?.id)
-        }
+        },
+        orderBy: {
+            startTime: 'desc'
+        },
+        take: 5
     });
     return txns.map(t => ({
         time: t.startTime,
@@ -43,12 +47,14 @@ export default async function () {
                 Transfer
             </div>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 p-4">
-                <div>
+                <div className="transition-transform hover:scale-[1.02] duration-300">
                     <AddMoney />
                 </div>
-                <div>
+                <div >
+                    <div className="transition-transform hover:scale-[1.02] duration-300">
                     <BalanceCard amount={balance.amount} locked={balance.locked} />
-                    <div className="pt-4">
+                    </div>
+                    <div className="pt-4 transition-transform hover:scale-[1.02] duration-300">
                         <OnRampTransactions transactions={transactions} />
                     </div>
                 </div>
