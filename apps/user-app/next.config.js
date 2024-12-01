@@ -2,6 +2,9 @@
 module.exports = {
   transpilePackages: ["@repo/ui"],
   output: 'standalone',
+  optimizePackageImports: [
+    '@prisma/client',
+    ],
 };
 
 
