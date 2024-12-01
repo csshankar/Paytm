@@ -13,6 +13,6 @@
     },
     "scripts": {
     "build": "prisma migrate deploy",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate && prisma db seed"
   }
 }
