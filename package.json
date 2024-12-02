@@ -6,7 +6,11 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "postinstall": "cd packages/db && npx prisma generate && npx prisma migrate deploy && npx prisma db "
+    "postinstall": "turbo run prisma:generate",
+    "prisma:generate": "prisma generate",
+    "vercel-build": "prisma migrate deploy && turbo run build"
+
+
     
   },
   "devDependencies": {

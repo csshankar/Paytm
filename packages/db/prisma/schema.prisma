@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "./prisma/generated"  // Updated output folder for Vercel deployment
+  output   = "././prisma/generated"  // Updated output folder for Vercel deployment
  binaryTargets = ["native", "debian-openssl-3.0.x","rhel-openssl-3.0.x"] // 
 }
 
