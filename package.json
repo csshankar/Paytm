@@ -5,12 +5,7 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "prisma:generate": "prisma generate",
-    "postinstall": "turbo run prisma:generate",
-    "vercel-build": "prisma migrate deploy && turbo run build"
-
-
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
     
   },
   "devDependencies": {
