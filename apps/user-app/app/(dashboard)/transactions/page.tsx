@@ -1,14 +1,14 @@
 import prisma from "@repo/db/client";
-import { OnRampTransactions } from "../../../components/OnRampTransactions";
+// import { OnRampTransactions } from "../../../components/OnRampTransactions";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../lib/auth";
 
+type OnRampStatus = 'Success' | 'Processing' | 'Failure';
+
 interface  t {
-    status: any;
-    startTime: any;
+    OnRampStatus: OnRampStatus;
     time: Date,
     amount: number,
-    OnRampStatus: any,
     provider: string
 }
 async function getOnRampTransactions() {
@@ -18,10 +18,12 @@ async function getOnRampTransactions() {
             userId: Number(session?.user?.id)
         }
     });
-    return txns.map((t: t) => ({
+    return txns.map((t: {
+        [x: string]: any; id: number; token: string; amount: number; provider: string; status: OnRampStatus; startTime: Date; userId: number; 
+}) => ({
         time: t.startTime,
         amount: t.amount,
-        status: t.status,
+        OnRampStatus: t.OnRampStatus,
         provider: t.provider
     }))
 }
@@ -46,13 +48,13 @@ export default async function TransactionsPage() {
                         <div className="bg-[#ededed] p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
                             <div className="text-sm text-gray-600">Successful</div>
                             <div className="text-2xl font-bold text-green-600">
-                                {transactions.filter((t: { status: string; }) => t.status === 'Success').length}
+                                {transactions.filter((t: t) => t.OnRampStatus === 'Success').length}
                             </div>
                         </div>
                         <div className="bg-[#ededed] p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
                             <div className="text-sm text-gray-600">Processing</div>
                             <div className="text-2xl font-bold text-yellow-600">
-                                {transactions.filter((t: { status: string; }) => t.status === 'Processing' ).length}
+                                {transactions.filter((t: t) => t.OnRampStatus === 'Processing').length}
                             </div>
                         </div>
                         <div className="bg-[#ededed] p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
@@ -90,8 +92,8 @@ export default async function TransactionsPage() {
                                         {/* Transaction Details */}
                                         <div className="flex items-center space-x-4">
                                             <div className={`w-3 h-3 rounded-full flex-shrink-0 transition-transform group-hover:scale-110 ${
-                                                t.status === 'Success' ? 'bg-green-500 shadow-lg shadow-green-200' :
-                                                t.status === 'Processing' ? 'bg-yellow-500 shadow-lg shadow-yellow-200' :
+                                                t.OnRampStatus === 'Success' ? 'bg-green-500 shadow-lg shadow-green-200' :
+                                                t.OnRampStatus === 'Processing' ? 'bg-yellow-500 shadow-lg shadow-yellow-200' :
                                                 'bg-red-500 shadow-lg shadow-red-200'
                                             }`} />
                                             <div>
@@ -116,11 +118,11 @@ export default async function TransactionsPage() {
                                                 ₹ {(t.amount / 100).toFixed(2)}
                                             </span>
                                             <span className={`text-xs px-3 py-1.5 rounded-full whitespace-nowrap transition-all group-hover:shadow-md ${
-                                                t.status === 'Success' ? 'bg-green-100 text-green-700 group-hover:bg-green-200' :
-                                                t.status === 'Processing' ? 'bg-yellow-100 text-yellow-700 group-hover:bg-yellow-200' :
+                                                t.OnRampStatus === 'Success' ? 'bg-green-100 text-green-700 group-hover:bg-green-200' :
+                                                t.OnRampStatus === 'Processing' ? 'bg-yellow-100 text-yellow-700 group-hover:bg-yellow-200' :
                                                 'bg-red-100 text-red-700 group-hover:bg-red-200'
                                             }`}>
-                                                {t.status}
+                                                {t.OnRampStatus}
                                             </span>
                                         </div>
                                     </div>

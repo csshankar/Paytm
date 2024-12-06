@@ -20,7 +20,7 @@ async function getp2pTransactions(searchQuery?: string) {
         },
         take: 5
     });
-    return txns.map(t => ({
+    return txns.map((t: { timestamp: Date; amount: number; toUserId: any; fromUserId: any; }) => ({
         key: t.timestamp,
         time: t.timestamp,
         amount: t.amount,

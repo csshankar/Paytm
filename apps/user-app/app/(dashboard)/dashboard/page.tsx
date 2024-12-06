@@ -1,9 +1,11 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../lib/auth";
 import prisma from "@repo/db/client";
-import { Card } from "@repo/ui/card";
+// import { Card } from "@repo/ui/card";
 import { OnRampTransactions } from "../../../components/OnRampTransactions";
 import { AddMoney } from "../../../components/AddMoneyCard";
+
+type OnRampStatus = 'Success' | 'Processing' | 'Failure';
 
 async function getBalance() {
     const session = await getServerSession(authOptions);
@@ -59,7 +61,7 @@ export default async function Dashboard() {
                 </div>
                 <div className="w-full transition-transform hover:scale-[1.02] duration-300">
                     <OnRampTransactions 
-                        transactions={transactions.map(t => ({
+                        transactions={transactions.map((t: { startTime: Date; amount: number; status: OnRampStatus; provider:string ; }) => ({
                             time: t.startTime,
                             amount: t.amount,
                             status: t.status,

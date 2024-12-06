@@ -4,6 +4,7 @@ import { BalanceCard } from "../../../components/BalanceCard";
 import { OnRampTransactions } from "../../../components/OnRampTransactions";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../lib/auth";
+type OnRampStatus = 'Success' | 'Processing' | 'Failure';
 
 async function getBalance() {
     const session = await getServerSession(authOptions);
@@ -29,7 +30,7 @@ async function getOnRampTransactions() {
         },
         take: 5
     });
-    return txns.map(t => ({
+    return txns.map((t: { startTime: Date; amount: number; status: OnRampStatus; provider: string; }) => ({
         time: t.startTime,
         amount: t.amount,
         status: t.status,

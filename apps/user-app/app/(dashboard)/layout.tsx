@@ -1,4 +1,4 @@
-import { Press_Start_2P } from "next/font/google";
+// import { Press_Start_2P } from "next/font/google";
 import { SidebarItem } from "../../components/SidebarItem";
 
 export default function Layout({
