@@ -3,6 +3,14 @@ import { OnRampTransactions } from "../../../components/OnRampTransactions";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../lib/auth";
 
+interface  t {
+    status: any;
+    startTime: any;
+    time: Date,
+    amount: number,
+    OnRampStatus: any,
+    provider: string
+}
 async function getOnRampTransactions() {
     const session = await getServerSession(authOptions);
     const txns = await prisma.onRampTransaction.findMany({
@@ -10,7 +18,7 @@ async function getOnRampTransactions() {
             userId: Number(session?.user?.id)
         }
     });
-    return txns.map(t => ({
+    return txns.map((t: t) => ({
         time: t.startTime,
         amount: t.amount,
         status: t.status,
@@ -38,19 +46,19 @@ export default async function TransactionsPage() {
                         <div className="bg-[#ededed] p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
                             <div className="text-sm text-gray-600">Successful</div>
                             <div className="text-2xl font-bold text-green-600">
-                                {transactions.filter(t => t.status === 'Success').length}
+                                {transactions.filter((t: { status: string; }) => t.status === 'Success').length}
                             </div>
                         </div>
                         <div className="bg-[#ededed] p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
                             <div className="text-sm text-gray-600">Processing</div>
                             <div className="text-2xl font-bold text-yellow-600">
-                                {transactions.filter(t => t.status === 'Processing').length}
+                                {transactions.filter((t: { status: string; }) => t.status === 'Processing' ).length}
                             </div>
                         </div>
                         <div className="bg-[#ededed] p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
                             <div className="text-sm text-gray-600">Total Amount</div>
                             <div className="text-2xl font-bold text-[#6a51a6]">
-                                ₹ {(transactions.reduce((acc, t) => acc + t.amount, 0) / 100).toFixed(2)}
+                                ₹ {(transactions.reduce((acc:any, t:t) => acc + t.amount, 0) / 100).toFixed(2)}
                             </div>
                         </div>
                     </div>
@@ -73,7 +81,7 @@ export default async function TransactionsPage() {
                                 <div className="text-sm text-gray-400">Your transactions will appear here</div>
                             </div>
                         ) : (
-                            transactions.map((t, idx) => (
+                            transactions.map((t:t, idx:any) => (
                                 <div 
                                     key={idx}
                                     className="group p-4 sm:p-6 hover:bg-purple-50 active:bg-purple-100 transition-all duration-200 cursor-pointer"

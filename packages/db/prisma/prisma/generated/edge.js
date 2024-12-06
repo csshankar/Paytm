@@ -7,7 +7,6 @@ const {
   PrismaClientRustPanicError,
   PrismaClientInitializationError,
   PrismaClientValidationError,
-  NotFoundError,
   getPrismaClient,
   sqltag,
   empty,
@@ -32,12 +31,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 5.21.1
- * Query Engine version: bf0e5e8a04cada8225617067eaa03d041e2bba36
+ * Prisma Client JS version: 6.0.1
+ * Query Engine version: 605197351a3c8bdd595af2d2a9bc3025bca48ea2
  */
 Prisma.prismaVersion = {
-  client: "5.21.1",
-  engine: "bf0e5e8a04cada8225617067eaa03d041e2bba36"
+  client: "6.0.1",
+  engine: "605197351a3c8bdd595af2d2a9bc3025bca48ea2"
 }
 
 Prisma.PrismaClientKnownRequestError = PrismaClientKnownRequestError;
@@ -45,7 +44,6 @@ Prisma.PrismaClientUnknownRequestError = PrismaClientUnknownRequestError
 Prisma.PrismaClientRustPanicError = PrismaClientRustPanicError
 Prisma.PrismaClientInitializationError = PrismaClientInitializationError
 Prisma.PrismaClientValidationError = PrismaClientValidationError
-Prisma.NotFoundError = NotFoundError
 Prisma.Decimal = Decimal
 
 /**
@@ -203,13 +201,13 @@ const config = {
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../..",
-  "clientVersion": "5.21.1",
-  "engineVersion": "bf0e5e8a04cada8225617067eaa03d041e2bba36",
+  "clientVersion": "6.0.1",
+  "engineVersion": "605197351a3c8bdd595af2d2a9bc3025bca48ea2",
   "datasourceNames": [
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
+  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -218,8 +216,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider      = \"prisma-client-js\"\n  output        = \"./prisma/generated\" // Updated output folder for Vercel deployment\n  binaryTargets = [\"native\", \"debian-openssl-3.0.x\", \"rhel-openssl-3.0.x\"] // \n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id                Int                 @id @default(autoincrement())\n  email             String?             @unique\n  name              String?\n  number            String              @unique\n  password          String\n  OnRampTransaction OnRampTransaction[]\n  Balance           Balance[]\n  sentTransfers     p2pTransfer[]       @relation(name: \"FromUserRelation\")\n  receivedTransfers p2pTransfer[]       @relation(name: \"ToUserRelation\")\n}\n\nmodel p2pTransfer {\n  id         Int      @id @default(autoincrement())\n  amount     Int\n  timestamp  DateTime\n  fromUserId Int\n  fromUser   User     @relation(name: \"FromUserRelation\", fields: [fromUserId], references: [id])\n  toUserId   Int\n  toUser     User     @relation(name: \"ToUserRelation\", fields: [toUserId], references: [id])\n}\n\nmodel Merchant {\n  id        Int      @id @default(autoincrement())\n  email     String   @unique\n  name      String?\n  auth_type AuthType\n}\n\nmodel OnRampTransaction {\n  id        Int          @id @default(autoincrement())\n  status    OnRampStatus\n  token     String       @unique\n  provider  String\n  amount    Int\n  startTime DateTime\n  userId    Int\n  user      User         @relation(fields: [userId], references: [id])\n}\n\nmodel Balance {\n  id     Int  @id @default(autoincrement())\n  userId Int  @unique\n  amount Int\n  locked Int\n  user   User @relation(fields: [userId], references: [id])\n}\n\nenum AuthType {\n  Google\n  Github\n}\n\nenum OnRampStatus {\n  Success\n  Failure\n  Processing\n}\n",
-  "inlineSchemaHash": "1334b0b945d2a9df2389dd67e9cc29679e8454c733dac343bbecf5c83fe0b7ca",
+  "inlineSchema": "generator client {\n  provider      = \"prisma-client-js\"\n  output        = \"././prisma/generated\" // Updated output folder for Vercel deployment\n  binaryTargets = [\"native\", \"debian-openssl-3.0.x\", \"rhel-openssl-3.0.x\"] // \n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id                Int                 @id @default(autoincrement())\n  email             String?             @unique\n  name              String?\n  number            String              @unique\n  password          String\n  OnRampTransaction OnRampTransaction[]\n  Balance           Balance[]\n  sentTransfers     p2pTransfer[]       @relation(name: \"FromUserRelation\")\n  receivedTransfers p2pTransfer[]       @relation(name: \"ToUserRelation\")\n}\n\nmodel p2pTransfer {\n  id         Int      @id @default(autoincrement())\n  amount     Int\n  timestamp  DateTime\n  fromUserId Int\n  fromUser   User     @relation(name: \"FromUserRelation\", fields: [fromUserId], references: [id])\n  toUserId   Int\n  toUser     User     @relation(name: \"ToUserRelation\", fields: [toUserId], references: [id])\n}\n\nmodel Merchant {\n  id        Int      @id @default(autoincrement())\n  email     String   @unique\n  name      String?\n  auth_type AuthType\n}\n\nmodel OnRampTransaction {\n  id        Int          @id @default(autoincrement())\n  status    OnRampStatus\n  token     String       @unique\n  provider  String\n  amount    Int\n  startTime DateTime\n  userId    Int\n  user      User         @relation(fields: [userId], references: [id])\n}\n\nmodel Balance {\n  id     Int  @id @default(autoincrement())\n  userId Int  @unique\n  amount Int\n  locked Int\n  user   User @relation(fields: [userId], references: [id])\n}\n\nenum AuthType {\n  Google\n  Github\n}\n\nenum OnRampStatus {\n  Success\n  Failure\n  Processing\n}\n",
+  "inlineSchemaHash": "90954e7567e5657ad4a538950ddd766d3f4ded323e79189894a4113d7c7cef54",
   "copyEngine": true
 }
 config.dirname = '/'
