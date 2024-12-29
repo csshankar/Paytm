@@ -4,7 +4,7 @@ import { P2pTransactions } from "../../../components/P2pTransactions";
 
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../lib/auth";
-import { div } from "framer-motion/client";
+//import { div } from "framer-motion/client";
 
 async function getp2pTransactions(searchQuery?: string) {
     const session = await getServerSession(authOptions);

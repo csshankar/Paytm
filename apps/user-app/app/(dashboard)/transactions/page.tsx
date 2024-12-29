@@ -2,7 +2,6 @@ import prisma from "@repo/db/client";
 // import { OnRampTransactions } from "../../../components/OnRampTransactions";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../lib/auth";
-
 type OnRampStatus = 'Success' | 'Processing' | 'Failure';
 
 interface  t {
@@ -18,14 +17,16 @@ async function getOnRampTransactions() {
             userId: Number(session?.user?.id)
         }
     });
+
+
     return txns.map((t: {
         [x: string]: any; id: number; token: string; amount: number; provider: string; status: OnRampStatus; startTime: Date; userId: number; 
-}) => ({
+    }) => ({
         time: t.startTime,
         amount: t.amount,
-        OnRampStatus: t.OnRampStatus,
+        OnRampStatus: t.status,
         provider: t.provider
-    }))
+    }));
 }
 
 export default async function TransactionsPage() {

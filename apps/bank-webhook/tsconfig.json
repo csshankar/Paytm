@@ -1,8 +1,16 @@
 {
   "extends": "@repo/typescript-config/base.json",
   "compilerOptions": {
-    "outDir": "dist"
-  },
+    "outDir": "dist",
+    "module": "NodeNext",  // Set module system to NodeNext for modern Node.js support
+    "moduleResolution": "NodeNext",
+     "paths": {
+     "@repo/db": ["../db"]
+      }, // Ensures proper resolution of modules like @prisma/client
+  "esModuleInterop": true,  // Allows default imports for commonjs modules
+  "skipLibCheck": true,  // Skip library type checking for faster compilation
+  "forceConsistentCasingInFileNames": true  // Prevent issues with case-sensitivity
+},
   "include": ["src"],
   "exclude": ["node_modules", "dist"]
 }
