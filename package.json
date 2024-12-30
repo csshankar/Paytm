@@ -2,6 +2,8 @@
   "name": "week-18",
   "private": true,
   "scripts": {
+    "postinstall": "cd packages/db && prisma generate && cd ../.. && npm run copy:prisma",
+    "copy:prisma": "cp node_modules/.prisma/client/libquery_engine-rhel-openssl-3.0.x.so.node node_modules/@prisma/client/",
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
@@ -16,7 +18,7 @@
     "eslint-config-turbo": "latest",
     "prettier": "^3.4.2",
     "prisma": "^6.0.1",
-    "turbo": "latest"
+    "turbo": "^2.3.3"
   },
   "engines": {
     "node": ">=18"
