@@ -3,8 +3,7 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "postinstall": "cd packages/db && prisma generate && cd ../.. && npm run copy:prisma",
-    "copy:prisma": "cp node_modules/.prisma/client/libquery_engine-rhel-openssl-3.0.x.so.node node_modules/@prisma/client/",
+    "postinstall": "cd packages/db && prisma generate",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
