@@ -6,7 +6,8 @@
     "JWT_SECRET",
     "NEXTAUTH_URL",
     "PRISMA_QUERY_ENGINE_BINARY",
-    "PRISMA_GENERATE_DATAPROXY"
+    "PRISMA_GENERATE_DATAPROXY",
+    "DIRECT_DATABASE_URL"
   ],
   "tasks": {
     "build": {
