@@ -2,11 +2,13 @@ generator client {
   provider      = "prisma-client-js"
   output        = "././prisma/generated" // Updated output folder for Vercel deployment
   binaryTargets = ["native", "debian-openssl-3.0.x", "rhel-openssl-3.0.x"] // 
+  
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
 }
 
 model User {
