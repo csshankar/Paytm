@@ -12,8 +12,13 @@
         "typescript": "^5.7.2"
     },
     "exports": {
-        "./client": "./index.ts"
+        "./client": {
+            "import": "./index.ts",
+            "require": "./index.ts"
+        }
     },
+    "main": "./index.ts",
+    "types": "./index.ts",
     "prisma": {
         "seed": "ts-node prisma/seed.ts"
     }
