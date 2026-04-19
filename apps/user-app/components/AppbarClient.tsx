@@ -9,9 +9,9 @@ export function AppbarClient() {
 
   return (
    <div>
-      <Appbar onSignin={signIn} onSignout={async () => {
-        await signOut()
-        router.push("/api/auth/signin")
+      <Appbar onSignin={() => signIn('credentials', { callbackUrl: '/dashboard' })} onSignout={async () => {
+        await signOut({ callbackUrl: '/' })
+        router.push("/")
       }} user={session.data?.user} />
    </div>
   );

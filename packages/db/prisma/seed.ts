@@ -1,7 +1,5 @@
-import { PrismaClient } from '@prisma/client'
-// const bcrypt = require("bcrypt");
+import prisma from '../index'
 import bcrypt from 'bcryptjs'
-const prisma = new PrismaClient()
 
 async function main() {
   const alice = await prisma.user.upsert({

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npx esbuild ./src/index.ts --bundle --platform=node --outfile=dist/index.js --external:@prisma/client",
+    "build": "esbuild ./src/index.ts --bundle --platform=node --outfile=dist/index.js --external:@prisma/client",
     "start": "node dist/index.js",
     "dev": "npx dotenv-cli -e ../../packages/db/.env -- tsx src/index.ts"
   },
@@ -13,11 +13,10 @@
   "license": "ISC",
   "dependencies": {
     "@repo/db": "*",
-    "@types/express": "^4.17.21",
-    "esbuild": "latest",
-    "express": "^4.19.1",
-    "tsx": "^4.19.1",
-    "dotenv-cli": "^7.4.2"
+    "@types/express": "^5.0.0",
+    "esbuild": "^0.25.0",
+    "express": "^5.0.1",
+    "tsx": "^4.19.3"
   },
   "devDependencies": {
     "@prisma/nextjs-monorepo-workaround-plugin": "^6.10.1"

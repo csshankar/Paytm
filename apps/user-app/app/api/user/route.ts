@@ -1,10 +1,9 @@
-import { getServerSession } from "next-auth"
 import { NextResponse } from "next/server";
-import { authOptions } from "../../lib/auth";
+import { getSessionSafely } from "../../lib/session";
 
 export const GET = async () => {
-    const session = await getServerSession(authOptions);
-    if (session.user) {
+    const session = await getSessionSafely();
+    if (session?.user) {
         return NextResponse.json({
             user: session.user
         })
@@ -12,6 +11,6 @@ export const GET = async () => {
     return NextResponse.json({
         message: "You are not logged in"
     }, {
-        status: 403
+        status: 401
     })
 }

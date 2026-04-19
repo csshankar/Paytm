@@ -5,12 +5,14 @@ import { z } from 'zod'
 import type { NextAuthOptions } from "next-auth"
 import type { Session } from "next-auth"
 import type { JWT } from "next-auth/jwt"
+import { NextResponse } from "next/server";
 
-// Zod schema for input validation
 const credentialsSchema = z.object({
     phone: z.string().min(10).max(15).regex(/^\d+$/, "Phone must contain only digits"),
-    password: z.string().min(6, "Password must be at least 6 characters")
+    password: z.string().min(1, "Password is required")
 });
+
+const signupPasswordSchema = z.string().min(6, "Password must be at least 6 characters");
 
 export const authOptions: NextAuthOptions = {
     providers: [
@@ -21,9 +23,8 @@ export const authOptions: NextAuthOptions = {
             password: { label: "Password", type: "password", required: true }
           },
           async authorize(credentials) {
-            // Validate input with zod
             if (!credentials?.phone || !credentials?.password) {
-                return null;
+               return null;
             }
 
             const validationResult = credentialsSchema.safeParse({
@@ -36,15 +37,23 @@ export const authOptions: NextAuthOptions = {
             }
 
             const { phone, password } = validationResult.data;
+            if (!phone) {
+                return null;
+            }
 
-            const existingUser = await db.user.findFirst({
-                where: {
-                    number: phone
-                }
-            });
+            let existingUser;
+            try {
+                existingUser = await db.user.findFirst({
+                    where: {
+                        number: phone
+                    }
+                });
+            } catch (e) {
+                console.error("Error finding user during auth:", e);
+                return null;
+            }
 
             if (existingUser) {
-                // Only compare password, don't hash on every login
                 const passwordValidation = await bcrypt.compare(password, existingUser.password);
                 if (passwordValidation) {
                     return {
@@ -56,13 +65,23 @@ export const authOptions: NextAuthOptions = {
                 return null;
             }
 
-            // Only hash password when creating new user
+            const passwordStrength = signupPasswordSchema.safeParse(password);
+            if (!passwordStrength.success) {
+                return null;
+            }
+
             try {
                 const hashedPassword = await bcrypt.hash(password, 10);
                 const user = await db.user.create({
                     data: {
                         number: phone,
-                        password: hashedPassword
+                        password: hashedPassword,
+                        Balance: {
+                            create: {
+                                amount: 0,
+                                locked: 0
+                            }
+                        }
                     }
                 });
             
@@ -78,21 +97,48 @@ export const authOptions: NextAuthOptions = {
           },
         })
     ],
-    // Security: Use NEXTAUTH_SECRET (NextAuth default) or fallback to JWT_SECRET
-    secret: process.env.NEXTAUTH_SECRET || process.env.JWT_SECRET || (() => {
-        if (process.env.NODE_ENV === 'production') {
-            throw new Error('NEXTAUTH_SECRET or JWT_SECRET environment variable is required in production');
-        }
-        console.warn('⚠️  WARNING: Using default secret. This is insecure and should only be used in development.');
-        return "secret";
-    })(),
+    secret: process.env.NEXTAUTH_SECRET || process.env.JWT_SECRET,
     callbacks: {
+        async jwt({ token, user }) {
+            if (user) {
+                token.sub = user.id;
+            }
+            return token;
+        },
         async session({ token, session }: { token: JWT; session: Session }): Promise<Session> {
             if (session.user && token.sub) {
                 session.user.id = token.sub;
             }
             return session;
+        },
+        async redirect({ url, baseUrl }) {
+            if (process.env.NODE_ENV === 'production') {
+                if (url.startsWith("/")) return `${baseUrl}${url}`
+                else if (new URL(url).origin === baseUrl) return url
+                return baseUrl
+            }
+
+            const isDevelopment = process.env.NODE_ENV === 'development' || !process.env.NODE_ENV;
+            
+            let siteUrl = process.env.NEXTAUTH_URL || 'http://localhost:3001';
+            
+            if (url.startsWith("/")) {
+                return `${siteUrl}${url}`;
+            }
+            
+            try {
+                const urlObj = new URL(url);
+                
+                if (urlObj.hostname === 'localhost') {
+                    const pathAndQuery = `${urlObj.pathname}${urlObj.search}`;
+                    return `http://localhost:3001${pathAndQuery}`;
+                }
+                
+                return url;
+            } catch (e) {
+            }
+            
+            return `${siteUrl}/dashboard`;
         }
     }
   }
-  
