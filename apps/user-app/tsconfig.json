@@ -9,6 +9,7 @@
     ],
     "baseUrl": ".",
     "paths": {
+      "@repo/db/*": ["../../packages/db/*"],
       "@repo/ui/*": ["../packages/ui/src/*"]
     },
     "jsx": "preserve",

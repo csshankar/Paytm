@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@prisma/nextjs-monorepo-workaround-plugin": "^6.10.1",
+    "@repo/db": "*",
     "@repo/store": "*",
     "@repo/ui": "*",
     "esbuild": "*",
