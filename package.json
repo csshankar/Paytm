@@ -39,5 +39,11 @@
     "bcryptjs": "^2.4.3",
     "next-auth": "^4.24.13",
     "zod": "^3.23.8"
+  },
+  "overrides": {
+    "glob": "^13.0.0",
+    "rimraf": "^6.0.1",
+    "@humanwhocodes/config-array": "npm:@eslint/config-array@^0.19.2",
+    "@humanwhocodes/object-schema": "npm:@eslint/object-schema@^2.1.6"
   }
 }
