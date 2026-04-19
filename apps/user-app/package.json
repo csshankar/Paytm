@@ -12,7 +12,7 @@
     "@prisma/nextjs-monorepo-workaround-plugin": "^6.10.1",
     "@repo/store": "*",
     "@repo/ui": "*",
-    "esbuild": "latest",
+    "esbuild": "*",
     "next": "16.2.4",
     "next-auth": "^4.24.13",
     "react": "^19.2.0",
