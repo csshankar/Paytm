@@ -16,7 +16,6 @@
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "*",
     "@types/react": "^19.2.3",
-    "dotenv-cli": "^11.0.0",
     "eslint-config-turbo": "*",
     "ts-node": "^10.9.2",
     "turbo": "^2.9.6",
@@ -35,6 +34,7 @@
     "@turbo/gen": "^2.7.2",
     "@turbo/workspaces": "^2.7.2",
     "bcryptjs": "^2.4.3",
+    "dotenv-cli": "^11.0.0",
     "next-auth": "^4.24.13",
     "prisma": "^7.3.0",
     "zod": "^3.23.8"

@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "dotenv -e ../../packages/db/.env -- next dev --port 3001 --webpack",
-    "build": "dotenv -e ../../packages/db/.env -- next build --webpack",
-    "start": "dotenv -e ../../packages/db/.env -- next start"
+    "dev": "npx dotenv-cli -e ../../packages/db/.env -- next dev --port 3001 --webpack",
+    "build": "npx dotenv-cli -e ../../packages/db/.env -- next build --webpack",
+    "start": "npx dotenv-cli -e ../../packages/db/.env -- next start"
   },
   "dependencies": {
     "@prisma/nextjs-monorepo-workaround-plugin": "^6.10.1",
