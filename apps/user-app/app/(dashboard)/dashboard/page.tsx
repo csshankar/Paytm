@@ -48,9 +48,9 @@ export default async function Dashboard() {
     const transactions = await getRecentTransactions();
 
     return (
-        <div className="w-full min-h-screen bg-slate-50 pb-12">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex flex-col md:flex-row md:items-center justify-between py-8">
+        <div className="w-full h-[calc(100vh-65px)] bg-slate-50 overflow-hidden">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col">
+                <div className="flex flex-col md:flex-row md:items-center justify-between py-6 shrink-0">
                     <div>
                         <h1 className="text-3xl font-bold text-[#6a51a6]">Dashboard</h1>
                         <p className="text-gray-600 mt-1">Welcome back, {session.user.name || "User"}</p>
@@ -63,9 +63,9 @@ export default async function Dashboard() {
                     </div>
                 </div>
                 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 flex-grow overflow-hidden min-h-0 pb-6">
                     {/* Left Column - Balance & Quick Actions */}
-                    <div className="lg:col-span-2 space-y-8">
+                    <div className="lg:col-span-2 space-y-6 overflow-y-auto h-full pr-2">
                         <div className="bg-gradient-to-br from-[#6a51a6] to-[#4b3b7a] rounded-3xl shadow-xl overflow-hidden relative">
                             <div className="absolute top-0 right-0 p-8 opacity-10">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-32 h-32">
@@ -94,12 +94,12 @@ export default async function Dashboard() {
                         </div>
                     </div>
 
-                    {/* Right Column - Add Money & Transactions */}
-                    <div className="space-y-8">
-                        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    {/* Right Column - Add Money & Transactions (Only Transactions Scroll) */}
+                    <div className="flex flex-col h-full overflow-hidden space-y-6">
+                        <div className="shrink-0">
                             <AddMoney />
                         </div>
-                        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div className="flex-grow overflow-y-auto min-h-0 pr-1 pb-4">
                             <OnRampTransactions 
                                 transactions={transactions.map((t: OnRampTransaction) => ({
                                     time: t.startTime,
@@ -107,6 +107,8 @@ export default async function Dashboard() {
                                     status: t.status,
                                     provider: t.provider
                                 }))} 
+                                initialVisibleCount={3}
+                                showLoadMore={false}
                             />
                         </div>
                     </div>

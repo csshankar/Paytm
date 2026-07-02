@@ -28,7 +28,7 @@ async function getOnRampTransactions() {
         orderBy: {
             startTime: 'desc'
         },
-        take: 10
+        take: 50
     });
     return txns.map((t: OnRampTransaction) => ({
         time: t.startTime,
@@ -48,36 +48,30 @@ export default async function TransferPage() {
     const transactions = await getOnRampTransactions();
 
     return (
-        <div className="w-full min-h-screen bg-slate-50 pb-12">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-                <div className="mb-10">
-                    <h1 className="text-4xl font-extrabold text-[#6a51a6] tracking-tight">Transfer & Top-up</h1>
-                    <p className="mt-3 text-lg text-gray-600 max-w-2xl">
+        <div className="w-full h-[calc(100vh-65px)] bg-slate-50 overflow-hidden">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full flex flex-col h-full">
+                {/* Fixed Header */}
+                <div className="mb-6 shrink-0">
+                    <h1 className="text-3xl font-extrabold text-[#6a51a6] tracking-tight">Transfer & Top-up</h1>
+                    <p className="mt-1 text-sm text-gray-600 max-w-2xl">
                         Add funds to your secure wallet or manage your balances with ease.
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-                    {/* Left Column: Add Money */}
-                    <div className="lg:col-span-5">
-                        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden sticky top-24">
-                            <div className="bg-[#6a51a6] p-4 text-white text-center font-bold text-sm uppercase tracking-widest">
-                                Quick Wallet Top-up
-                            </div>
-                            <div className="p-2">
-                                <AddMoney />
-                            </div>
-                        </div>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 flex-grow overflow-hidden min-h-0 pb-4">
+                    {/* Left Column: Add Money (Fixed) */}
+                    <div className="lg:col-span-5 h-fit">
+                        <AddMoney />
                     </div>
 
-                    {/* Right Column: Balance & Transactions */}
-                    <div className="lg:col-span-7 space-y-10">
-                        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+                    {/* Right Column: Balance & Transactions (Only Transactions Scroll) */}
+                    <div className="lg:col-span-7 flex flex-col h-full overflow-hidden space-y-6">
+                        <div className="shrink-0">
                             <BalanceCard amount={balance.amount} locked={balance.locked} />
                         </div>
                         
-                        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden min-h-[400px]">
-                            <OnRampTransactions transactions={transactions} />
+                        <div className="flex-grow overflow-y-auto min-h-0 pr-1 pb-4">
+                            <OnRampTransactions transactions={transactions} initialVisibleCount={5} showLoadMore={true} />
                         </div>
                     </div>
                 </div>

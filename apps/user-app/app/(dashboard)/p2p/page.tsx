@@ -45,25 +45,25 @@ export default async function P2PPage(props: { searchParams: Promise<{ search?: 
     const transactions = await getp2pTransactions(searchParams.search);
     
     return (
-        <div className="w-full min-h-screen bg-slate-50">
-            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-                <div className="mb-10 text-center md:text-left">
-                    <h1 className="text-4xl font-extrabold text-[#6a51a6] tracking-tight">P2P Transfer</h1>
-                    <p className="mt-3 text-lg text-gray-600 max-w-2xl">
+        <div className="w-full h-[calc(100vh-65px)] bg-slate-50 overflow-hidden">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full flex flex-col h-full">
+                {/* Fixed Header */}
+                <div className="mb-6 text-center md:text-left shrink-0">
+                    <h1 className="text-3xl font-extrabold text-[#6a51a6] tracking-tight">P2P Transfer</h1>
+                    <p className="mt-1 text-sm text-gray-500 max-w-2xl">
                         Send money instantly to anyone with a valid mobile number. Safe, secure, and lightning fast.
                     </p>
                 </div>
                 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-                    <div className="lg:col-span-5">
-                        <div className="sticky top-24 transition-all hover:shadow-xl rounded-2xl"> 
-                            <SendCard />
-                        </div>
+                {/* Grid container */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 flex-grow overflow-hidden min-h-0 pb-4">
+                    {/* Left Column: Send Card (Fixed) */}
+                    <div className="lg:col-span-5 h-fit">
+                        <SendCard />
                     </div>
-                    <div className="lg:col-span-7">
-                        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden min-h-[500px]">
-                            <P2pTransactions transactions={transactions} />
-                        </div>
+                    {/* Right Column: Transactions Feed (Scrollable) */}
+                    <div className="lg:col-span-7 overflow-y-auto h-full pr-2 pb-6">
+                        <P2pTransactions transactions={transactions} />
                     </div>
                 </div>
             </div>

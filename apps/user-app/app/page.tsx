@@ -95,20 +95,15 @@ export default async function Page() {
                         </div>
                     </div>
                     <div className="relative hidden lg:block">
-                        <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/10 to-transparent rounded-[3rem] blur-3xl -z-10"></div>
-                        <div className="bg-white p-4 rounded-[3rem] shadow-2xl border border-slate-100 rotate-2 hover:rotate-0 transition-transform duration-700">
-                             <div className="bg-slate-50 rounded-[2.2rem] h-[600px] overflow-hidden relative">
-                                <div className="absolute top-0 inset-x-0 h-24 bg-gradient-to-b from-white to-transparent z-10"></div>
-                                <div className="p-8 space-y-6 pt-12">
-                                    <div className="h-40 bg-gradient-to-br from-[#6a51a6] to-[#4b3b7a] rounded-3xl shadow-lg"></div>
-                                    <div className="grid grid-cols-4 gap-4">
-                                        {[1,2,3,4].map(i => <div key={i} className="aspect-square bg-white rounded-2xl shadow-sm border border-slate-100"></div>)}
-                                    </div>
-                                    <div className="space-y-4">
-                                        <div className="h-20 bg-white rounded-2xl shadow-sm border border-slate-100"></div>
-                                        <div className="h-20 bg-white rounded-2xl shadow-sm border border-slate-100"></div>
-                                    </div>
-                                </div>
+                        <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/20 to-transparent rounded-[3.5rem] blur-3xl -z-10"></div>
+                        <div className="bg-white p-4 rounded-[3.5rem] shadow-2xl border border-slate-100/80 rotate-2 hover:rotate-0 transition-transform duration-700">
+                             <div className="bg-slate-950 rounded-[2.8rem] h-[600px] overflow-hidden relative border border-slate-900 shadow-inner">
+                                 <img 
+                                     src="/nexispay_hero_mockup.jpg" 
+                                     alt="NexisPay Dashboard Showcase" 
+                                     className="w-full h-full object-cover select-none"
+                                 />
+                                 <div className="absolute inset-0 bg-gradient-to-t from-purple-950/20 via-transparent to-transparent pointer-events-none"></div>
                              </div>
                         </div>
                     </div>
@@ -155,12 +150,36 @@ export default async function Page() {
                     </div>
                     <div className="grid md:grid-cols-3 gap-8">
                         {[
-                            { title: "Instant Wallet", desc: "Top up your wallet and pay anyone in seconds. Fast, secure, and always reliable.", icon: "W" },
-                            { title: "Secure UPI", desc: "Link your bank accounts and make direct payments with bank-grade security.", icon: "U" },
-                            { title: "Smart Passbook", desc: "Keep track of every single transaction with our intelligent, categorized history.", icon: "P" }
+                            { 
+                                title: "Instant Wallet", 
+                                desc: "Top up your wallet and pay anyone in seconds. Fast, secure, and always reliable.", 
+                                icon: (
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-7 h-7">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M21 12h-1.5a1.5 1.5 0 0 0-1.5 1.5v3.75a1.5 1.5 0 0 0 1.5 1.5H21M21 12V6.75A2.25 2.25 0 0 0 18.75 4.5H5.25A2.25 2.25 0 0 0 3 6.75v10.5A2.25 2.25 0 0 0 5.25 19.5h13.5A2.25 2.25 0 0 0 21 17.25V12m0 0h-1.5" />
+                                    </svg>
+                                )
+                            },
+                            { 
+                                title: "Secure UPI", 
+                                desc: "Link your bank accounts and make direct payments with bank-grade security.", 
+                                icon: (
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-7 h-7">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+                                    </svg>
+                                )
+                            },
+                            { 
+                                title: "Smart Passbook", 
+                                desc: "Keep track of every single transaction with our intelligent, categorized history.", 
+                                icon: (
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-7 h-7">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
+                                    </svg>
+                                )
+                            }
                         ].map((f, i) => (
                             <div key={i} className="bg-white p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl transition-all duration-500 border border-slate-100 group hover:-translate-y-2">
-                                <div className="w-16 h-16 bg-purple-50 rounded-2xl flex items-center justify-center text-[#6a51a6] font-black text-2xl mb-8 group-hover:bg-[#6a51a6] group-hover:text-white transition-colors">
+                                <div className="w-16 h-16 bg-purple-50 rounded-2xl flex items-center justify-center text-[#6a51a6] mb-8 group-hover:bg-[#6a51a6] group-hover:text-white transition-colors">
                                     {f.icon}
                                 </div>
                                 <h3 className="text-2xl font-black text-slate-900 mb-4 tracking-tight">{f.title}</h3>

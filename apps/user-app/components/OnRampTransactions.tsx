@@ -1,16 +1,28 @@
+"use client"
+import { useState } from "react";
 import { Card } from "@repo/ui/card"
 import type { OnRampStatus } from "@prisma/client";
 
 export const OnRampTransactions = ({
-    transactions
+    transactions,
+    initialVisibleCount = 5,
+    showLoadMore = false
 }: {
     transactions: {
         time: Date,
         amount: number,
         status: OnRampStatus,
         provider: string
-    }[]
+    }[],
+    initialVisibleCount?: number,
+    showLoadMore?: boolean
 }) => {
+    const [visibleCount, setVisibleCount] = useState(initialVisibleCount);
+
+    const handleLoadMore = () => {
+        setVisibleCount(prev => prev + 5);
+    };
+
     if (!transactions.length) {
         return (
             <Card title="Wallet Top-up History">
@@ -59,10 +71,12 @@ export const OnRampTransactions = ({
         }
     };
 
+    const displayedTransactions = transactions.slice(0, visibleCount);
+
     return (
         <Card title="Wallet Top-up History">
             <div className="pt-4 flex flex-col space-y-1">
-                {transactions.map((t, index) => {
+                {displayedTransactions.map((t, index) => {
                     const styles = getStatusStyles(t.status);
                     return (
                         <div key={index} className="flex justify-between items-center p-4 rounded-2xl hover:bg-slate-50 transition-all duration-200 group">
@@ -95,6 +109,16 @@ export const OnRampTransactions = ({
                     );
                 })}
             </div>
+            {showLoadMore && transactions.length > visibleCount && (
+                <div className="pt-4 pb-2 flex justify-center">
+                    <button 
+                        onClick={handleLoadMore}
+                        className="px-6 py-2.5 bg-slate-100 hover:bg-slate-200 text-[#6a51a6] font-bold text-xs rounded-full transition-all active:scale-95 shadow-sm"
+                    >
+                        Load More Activity
+                    </button>
+                </div>
+            )}
         </Card>
     );
 }
